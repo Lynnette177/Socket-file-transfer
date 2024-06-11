@@ -215,12 +215,16 @@ public:
                         if (file.is_open()) {
                             std::streampos fileSize = file.tellg(); // 获取文件大小，单位为字节
                             double fileSizeMB = static_cast<double>(fileSize) / (1024 * 1024); // 将字节转换为MB
-                            std::cout << "\nFile size: " << fileSizeMB << " MB" << std::endl;
+                            double fileSizeBytes = static_cast<double>(fileSize);
+                            std::cout << "\nFile size: " << fileSizeMB << " MB  " << fileSizeBytes <<"Bytes" << std::endl;
                             char filesizestr[100];
+                            char filesizebytestr[100];
                             sprintf_s(filesizestr, "%.2f",fileSizeMB);
+                            sprintf_s(filesizebytestr , "%d", (int)fileSizeBytes);
                             std::string filesizestring(filesizestr);
+                            std::string filesizesbytestring(filesizebytestr);
                             file.seekg(0, std::ios::beg);
-                            send_message(("SUCCESS_START_DOWNLOADING:" + filesizestring).c_str());
+                            send_message(("SUCCESS_START_DOWNLOADING:" + filesizestring + "|" + filesizebytestr).c_str());
                             Sleep(100);
                             send_message("SUCCESS_RDY",1);
                             Sleep(100);
@@ -538,8 +542,12 @@ public:
                         }
                     }
                     else if (strncmp(message.c_str(), "SUCCESS_START_DOWNLOADING", 21) == 0) {
-                        std::string filesize_ = std::strrchr(message.c_str(), ':') + 1;
-                        std::cout << "File Size: " << filesize_ << "MB";
+                        std::size_t start_filestart = message.find(':');
+                        std::size_t end_fileend = message.find('|');
+                        std::string filesize_ = message.substr(start_filestart + 1, end_fileend - start_filestart - 1);
+                        std::string filesizebytes_ = std::strrchr(message.c_str(), '|') + 1;
+                        std::cout << "File Size: " << filesize_ << " MB";
+                        std::cout << "File Size(Bytes): " << filesizebytes_ << " Bytes";
                         this->file_size = filesize_;
                     }
                     else {
