@@ -1,0 +1,37 @@
+{
+  "project": "SecureFileTransfer",
+  "openssl": "3.5.9",
+  "openssl_source_sha256": "603f5602e2eef00d77fbd429d34dcd5822bb301757a1bc9cdb24c670f1eb859a",
+  "binaries": {
+    "macos-arm64/sft": {
+      "sha256": "e26c62743572bbf81beeb1506a2a3a906766a8b455ee6b13e23350289a56ec6a",
+      "size_bytes": 5231168,
+      "native_runtime_tested": true
+    },
+    "linux-x86_64/sft": {
+      "sha256": "646e6f9fc4f418dce6ecf35cc8951aa775cc5622b15b7618e325ea06038bc970",
+      "size_bytes": 30430104,
+      "native_runtime_tested": false
+    },
+    "windows-x86_64/sft.exe": {
+      "sha256": "24274fc944234c75cd9c0fca6d23d3c06c95345805bbe7d0a6a72f7b73ce1a6d",
+      "size_bytes": 7352320,
+      "native_runtime_tested": false
+    }
+  },
+  "sources": {
+    "source/src/includes.h": "09d099809455f77da87c609e432f524e761f6f48f225509991fc88386564e65d",
+    "source/src/main.cpp": "80033bbaad7ef8c8e3227d557ed56f69f11763b5e56ee4285cef9264cee2100c",
+    "source/src/network.cpp": "e32044d8ad7e2950ac2b3fc1a4fa83386b0385fcd575dcce05c62e1586fcad3d",
+    "source/src/network.h": "560de49e2619eb7c87f7d303c872a3f31d7fa59ab950ae57c8e727de86bb55d0",
+    "source/src/protocol.cpp": "534a181fcdc11057f93f9bbbb3f77cfaa943896e68f18066ca410897644b25b1",
+    "source/src/protocol.h": "c35edcba831934757d39fa0aa6f06b58e48d3bdcaa43f6a35489c01139c91be0",
+    "source/src/security.cpp": "afbad4f0e5958175f54075b06b5d31ea60e8ab1878ddf71fb6f1fb137e27cfd9",
+    "source/src/security.h": "a20bcc1fe626092075323c8e3bb75acb176fcda37c3fdc4f333aec5345a282df",
+    "source/src/server.cpp": "21ac01123de5321b52b1e5a5057f70227de58829b4f41c27315fcc2dcbecfb2a",
+    "source/src/server.h": "c5ed2f7c16c5f8a5e679f98ad6c3d9fb0a0c7d2ec93a63e80db7b1cd5141e375",
+    "source/src/storage.cpp": "988fdf6350d087373ea81e1b78a812fd585d237a7adadecb6399366ade274dec",
+    "source/src/storage.h": "951b19a7d21c87c9bbd4ae52ab1150ce449d2cb395a5e2349c895a81bd2156ec",
+    "source/CMakeLists.txt": "9c9414a53edc6a11e574123ee3332839796a685b73bc91436cdf2e662c3faff1"
+  }
+}

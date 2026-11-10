@@ -1,0 +1,4 @@
+Exit code: 0
+PASS: binary/Unicode/long filenames, multi-file session, fresh reconnect, rekey, overwrite,
+      mutual pins, framing, traversal/link rejection, atomic cleanup, hash/size limits,
+      ciphertext tampering/replay rejection, concurrent clients, timeout and shutdown.

@@ -1,0 +1,23 @@
+# Local builds and generated caches
+build*/
+.DS_Store
+__pycache__/
+*.pyc
+*.obj
+*.pdb
+*.ilk
+*.tlog/
+
+# Local testing identities and runtime data
+local-test/
+shared/
+local_files/
+trusted_clients/
+*.key
+*-private.pem
+*.p12
+*.pfx
+.sft-part-*
+
+# Redundant packaged copies
+*.zip

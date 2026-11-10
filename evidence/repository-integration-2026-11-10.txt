@@ -1,0 +1,24 @@
+Repository validation: 2026-11-10
+Platform: macOS arm64
+Build: Release, C++17, static OpenSSL 3.6.3
+Commands: cmake -S source -B build; cmake --build build --parallel 4; ctest --test-dir build --output-on-failure
+
+Start testing: Nov 10 12:32 CST
+----------------------------------------------------------
+1/1 Testing: integration
+1/1 Test: integration
+"integration" start time: Nov 10 12:32 CST
+Output:
+----------------------------------------------------------
+PASS: binary/Unicode/long filenames, multi-file session, fresh reconnect, rekey, overwrite,
+      mutual pins, framing, traversal/link rejection, atomic cleanup, hash/size limits,
+      ciphertext tampering/replay rejection, concurrent clients, timeout and shutdown.
+<end of output>
+Test time =   3.62 sec
+----------------------------------------------------------
+Test Passed.
+"integration" end time: Nov 10 12:32 CST
+"integration" time elapsed: 00:00:03
+----------------------------------------------------------
+
+End testing: Nov 10 12:32 CST

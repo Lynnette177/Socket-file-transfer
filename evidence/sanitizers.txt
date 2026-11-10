@@ -1,0 +1,20 @@
+macOS arm64 / ASan + UBSan / OpenSSL 3.6.3
+Start testing: Oct 13 13:26 CST
+----------------------------------------------------------
+1/1 Testing: integration
+1/1 Test: integration
+"integration" start time: Oct 13 13:26 CST
+Output:
+----------------------------------------------------------
+PASS: binary/Unicode/long filenames, multi-file session, fresh reconnect, rekey, overwrite,
+      mutual pins, framing, traversal/link rejection, atomic cleanup, hash/size limits,
+      ciphertext tampering/replay rejection, concurrent clients, timeout and shutdown.
+<end of output>
+Test time =   3.99 sec
+----------------------------------------------------------
+Test Passed.
+"integration" end time: Oct 13 13:26 CST
+"integration" time elapsed: 00:00:03
+----------------------------------------------------------
+
+End testing: Oct 13 13:26 CST

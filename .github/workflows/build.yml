@@ -1,0 +1,66 @@
+name: Build and test
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Linux dependencies
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y libssl-dev openssl
+      - name: macOS dependencies
+        if: runner.os == 'macOS'
+        run: brew list openssl@3 || brew install openssl@3
+      - name: Windows dependencies
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: vcpkg install openssl:x64-windows-static
+      - name: Configure Linux
+        if: runner.os == 'Linux'
+        run: cmake -S source -B build -DCMAKE_BUILD_TYPE=Release -DSFT_STATIC_OPENSSL=ON
+      - name: Configure macOS
+        if: runner.os == 'macOS'
+        run: cmake -S source -B build -DCMAKE_BUILD_TYPE=Release -DSFT_STATIC_OPENSSL=ON -DOPENSSL_ROOT_DIR="$(brew --prefix openssl@3)"
+      - name: Configure Windows
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: >-
+          cmake -S source -B build -A x64
+          -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
+          -DVCPKG_TARGET_TRIPLET=x64-windows-static -DSFT_STATIC_OPENSSL=ON
+          -DSFT_OPENSSL_EXECUTABLE="C:/Program Files/Git/usr/bin/openssl.exe"
+      - name: Build
+        run: cmake --build build --config Release --parallel
+      - name: Integration tests
+        run: ctest --test-dir build -C Release --output-on-failure
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sft-${{ runner.os }}-${{ runner.arch }}
+          path: |
+            build/sft
+            build/Release/sft.exe
+            readme.md
+          if-no-files-found: error
+
+  sanitizers:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: sudo apt-get update && sudo apt-get install -y libssl-dev openssl
+      - run: cmake -S source -B build -DCMAKE_BUILD_TYPE=Debug -DSFT_SANITIZE=ON
+      - run: cmake --build build --parallel
+      - run: ctest --test-dir build --output-on-failure
