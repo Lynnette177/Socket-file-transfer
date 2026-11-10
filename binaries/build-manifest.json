@@ -14,9 +14,18 @@
       "native_runtime_tested": false
     },
     "windows-x86_64/sft.exe": {
-      "sha256": "24274fc944234c75cd9c0fca6d23d3c06c95345805bbe7d0a6a72f7b73ce1a6d",
-      "size_bytes": 7352320,
-      "native_runtime_tested": false
+      "sha256": "cf18726211222cc9d4f3e37f0aaf6d65db0261f839b4dbcaf99ccd51aeb52ed4",
+      "size_bytes": 10427006,
+      "native_runtime_tested": true,
+      "compiler": "MinGW GCC 14.2.0",
+      "openssl": "3.5.9 (static)"
+    },
+    "windows-x86_64/sft_gui.exe": {
+      "sha256": "9cd497fd9e9d28ea697148c4531f790614d8e785d9307773455709e64f87810b",
+      "size_bytes": 721871,
+      "native_runtime_tested": true,
+      "compiler": "MinGW GCC 14.2.0",
+      "openssl": null
     }
   },
   "sources": {
@@ -33,5 +42,22 @@
     "source/src/storage.cpp": "988fdf6350d087373ea81e1b78a812fd585d237a7adadecb6399366ade274dec",
     "source/src/storage.h": "951b19a7d21c87c9bbd4ae52ab1150ce449d2cb395a5e2349c895a81bd2156ec",
     "source/CMakeLists.txt": "9c9414a53edc6a11e574123ee3332839796a685b73bc91436cdf2e662c3faff1"
+  },
+  "sources_note": "Historical source snapshot for the earlier macOS and Linux binaries.",
+  "windows_source_snapshot": {
+    "source/src/gui_win.cpp": "69e85c002e1bd257faa07b52b599cd07560ad900e42e97652e9e3dd5a94f563e",
+    "source/src/includes.h": "e82878118e05e09f1dc56675f992c204519ab586395605701150a9fe1c197a15",
+    "source/src/main.cpp": "07aa8397b2d7b0751f0ac98fd44e169f8ba4eff2450001ffde1675d1e0625952",
+    "source/src/network.cpp": "aac7917783cd4437ff9c02b7e8676b6d4c2de65ac756553d5c89bb07f9887478",
+    "source/src/network.h": "ccf5ba51f0375105976331e7f4f2589b7779704e7d47e711c726f7f789b968f2",
+    "source/src/protocol.cpp": "17b9d2e77e24a3f7e123b35879df818efb3b6a5c3d11441b949da77cb38ae39d",
+    "source/src/protocol.h": "b3645a7c7d44708a2c9749b2ff32fa11dcfd17c19b500d03fdb2bc8c1609b875",
+    "source/src/security.cpp": "db8e61baa90b511fcdd9e49c10899b4f8e74026b17b6418e5b741e45fd43bbde",
+    "source/src/security.h": "cf5e0c9d216aecf069ef6ae5367cdd175a45fb28818eb7ab94862ab79fc4978a",
+    "source/src/server.cpp": "93fe9cf5148c30abaed1e6b8bdd996a168b3be0e565f78208a3d9e5ec688543b",
+    "source/src/server.h": "b41fb6961ca680742bd069abea8ba1499dfc4da759de3c240b390300ec69588d",
+    "source/src/storage.cpp": "290327f5142b9f170e8d1adc352b3614bfe2540631c8f1653233643f0b665ebb",
+    "source/src/storage.h": "53b283eb67a3423d33d25007fe46120fd5c078f831fb2a466e0dc08f6f11dbfd",
+    "source/CMakeLists.txt": "7fe59acb6b85cb4b5996db5076de33f53689444b561ada8fda1dc283856dd6b7"
   }
 }

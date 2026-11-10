@@ -4,9 +4,11 @@
 |---|---|---|
 | macOS / Apple Silicon | [macos-arm64/sft](macos-arm64/sft) | 原生构建与集成测试通过 |
 | Linux / x86_64 | [linux-x86_64/sft](linux-x86_64/sft) | 交叉构建完成，ELF完全静态链接；目标平台运行待验证 |
-| Windows 10/11 / x86_64 | [windows-x86_64/sft.exe](windows-x86_64/sft.exe) | 交叉构建完成，依赖系统DLL；目标平台运行待验证 |
+| Windows 10/11 / x86_64 | [windows-x86_64/sft.exe](windows-x86_64/sft.exe) 和 [windows-x86_64/sft_gui.exe](windows-x86_64/sft_gui.exe) | 命令行程序和图形客户端位于同一目录 |
 
 每个程序同时包含服务端和客户端功能，通过启动参数选择角色，不用分别下载两份程序。各平台程序不能互相替代，其他CPU架构需要用源码另行构建。
+
+Windows 下编译 `sft` 和 `sft_gui` 后，CMake 默认把两个可执行文件输出到 `windows-x86_64`；图形客户端会调用同目录下的 `sft.exe`。可通过 `SFT_WINDOWS_OUTPUT_DIR` 修改输出目录。
 
 ## 快速使用
 
@@ -29,4 +31,5 @@ sft client --key client.key --peer server.pub --host 127.0.0.1 --port 5005 --loc
 - 同一会话可连续传输多个文件；重新连接必须完整握手，失败操作不会自动重放。
 - `get -o`在本地已有同名文件时追加`.L`保存。中断文件从头重传，暂不支持断点续传。
 - `SHA256SUMS`校验本目录文件，`build-manifest.json`记录程序与源码摘要及验证状态。
+- 清单记录交付时的构建；重新编译会覆盖 Windows 程序，之后需要重新生成摘要才能继续校验。
 - 各平台目录保留OpenSSL及静态运行库的相关许可文本。

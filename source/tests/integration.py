@@ -85,8 +85,10 @@ def server(base, *extra, trust=None, root=None, port_override=None):
 
 
 def client(base, port, commands, expected=0, key="client", peer="server", local=None):
-    script = base / f"commands-{time.time_ns()}.txt"
-    script.write_text(commands, encoding="utf-8")
+    with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=base,
+                                     prefix="commands-", suffix=".txt", delete=False) as stream:
+        stream.write(commands)
+        script = Path(stream.name)
     return run("client", "--key", base / (key + ".key"),
                "--peer", base / (peer + ".pub"), "--port", port,
                "--commands", script, "--local", local or base / "local",
@@ -275,6 +277,10 @@ def main():
             check(not (shared / "unauthorized").exists(), "Untrusted client performed an operation")
             ctx = tls_context(base)
             with tls_connect(ctx, port) as sock:
+                # The server's 3-second I/O deadline must not expire an idle session.
+                time.sleep(4)
+                sock.sendall(command("pwd"))
+                check(response(sock) == ["OK", "/"], "Idle session did not survive timeout")
                 for byte in command("pwd"):
                     sock.sendall(bytes([byte]))
                 check(response(sock) == ["OK", "/"], "Fragmented frame failed")
@@ -420,7 +426,7 @@ def main():
                 stdin=subprocess.PIPE, stdout=output, stderr=output)
             def logs():
                 output.seek(0)
-                return output.read().decode("utf-8", errors="replace")
+                return output.read().decode("utf-8", errors="replace").replace("\r\n", "\n")
             try:
                 recovering.stdin.write(b"mkdir recovery\ncd recovery\n")
                 recovering.stdin.flush()

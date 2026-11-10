@@ -76,7 +76,13 @@ NetworkRuntime::~NetworkRuntime() {
 #endif
 }
 Socket::Socket(SOCKET _sock) : sock(_sock) {
-    try { nonblocking(sock); }
+    try {
+        int enabled = 1;
+        if (setsockopt(sock, SOL_SOCKET, SO_KEEPALIVE,
+                reinterpret_cast<const char*>(&enabled), sizeof(enabled)) != 0)
+            throw std::runtime_error("Unable to enable TCP keepalive");
+        nonblocking(sock);
+    }
     catch (...) { close_socket(sock); throw; }
 }
 Socket::~Socket() {

@@ -38,6 +38,7 @@ public:
     void read_all(unsigned char* output, size_t length);
     void write_all(const unsigned char* input, size_t length);
     void update_keys();
+    bool wait_for_input(int milliseconds);
     std::string peer_fingerprint() const;
     void cancel() { sock->cancel(); }
 };

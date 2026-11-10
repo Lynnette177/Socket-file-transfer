@@ -107,12 +107,14 @@ set(CMAKE_EXE_LINKER_FLAGS "-static")
         app = build / "app"
         execute(["cmake", "-S", ROOT, "-B", app, "-G", "Ninja", f"-DCMAKE_TOOLCHAIN_FILE={toolchain}",
                  f"-DOPENSSL_ROOT_DIR={prefix}", "-DSFT_STATIC_OPENSSL=ON", "-DBUILD_TESTING=OFF",
-                 "-DCMAKE_BUILD_TYPE=Release"], build, env)
+                 f"-DSFT_WINDOWS_OUTPUT_DIR={app}", "-DCMAKE_BUILD_TYPE=Release"], build, env)
         execute(["cmake", "--build", app, "--parallel", "4"], build, env)
         artifact_dir = OUTPUT / target
         artifact_dir.mkdir(parents=True, exist_ok=True)
         name = "sft.exe" if system == "Windows" else "sft"
         shutil.copy2(app / name, artifact_dir / name)
+        if system == "Windows":
+            shutil.copy2(app / "sft_gui.exe", artifact_dir / "sft_gui.exe")
         shutil.copy2(source / "LICENSE.txt", artifact_dir / "OpenSSL-LICENSE.txt")
         if (source / "NOTICE").exists():
             shutil.copy2(source / "NOTICE", artifact_dir / "OpenSSL-NOTICE.txt")

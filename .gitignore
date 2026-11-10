@@ -7,8 +7,10 @@ __pycache__/
 *.pdb
 *.ilk
 *.tlog/
+.vscode/
 
 # Local testing identities and runtime data
+/test/runtime/
 local-test/
 shared/
 local_files/

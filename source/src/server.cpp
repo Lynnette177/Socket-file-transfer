@@ -57,6 +57,9 @@ void ClientHandler::handle() {
         print_line("New Connection Established. Client: " + address + " " + channel.peer_fingerprint());
         protocol.send_response(true, directory.virtual_path(currentPath));
         while (!stop_requested) {
+            // An idle authenticated session has no application read deadline. Once a
+            // frame starts, read_all still enforces the configured I/O timeout.
+            if (!channel.wait_for_input(200)) continue;
             auto command = protocol.receive_command();
             bool transferring = false;
             try {

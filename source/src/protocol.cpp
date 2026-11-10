@@ -120,7 +120,10 @@ void Protocol::send_file(std::ifstream& file, uint64_t size, bool progress) {
     }
     if (file.peek() != std::char_traits<char>::eof() || file.bad()) throw std::runtime_error("File changed or read failed");
     send_message(MessageType::FileEnd, digest.finish());
-    if (progress) { printProgressBar(sent, size); std::cout << "\nConfirming...\n"; }
+    if (progress) {
+        if (last_percent != 100) printProgressBar(sent, size);
+        std::cout << "\nConfirming...\n";
+    }
 }
 void Protocol::receive_file(AtomicFile& output, uint64_t size, bool progress) {
     FileDigest digest;
@@ -142,5 +145,8 @@ void Protocol::receive_file(AtomicFile& output, uint64_t size, bool progress) {
     if (ending.type != MessageType::FileEnd || ending.data.size() != expected.size() ||
         CRYPTO_memcmp(ending.data.data(), expected.data(), expected.size()) != 0)
         throw std::runtime_error("File SHA256 verification failed");
-    if (progress) { printProgressBar(received, size); std::cout << "\nConfirming...\n"; }
+    if (progress) {
+        if (last_percent != 100) printProgressBar(received, size);
+        std::cout << "\nConfirming...\n";
+    }
 }

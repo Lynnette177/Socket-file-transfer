@@ -210,6 +210,9 @@ SecureChannel::~SecureChannel() {
     // 不等待对端 close_notify；底层非阻塞 socket 由 RAII 回收。
     if (ssl) { ERR_clear_error(); SSL_shutdown(ssl.get()); }
 }
+bool SecureChannel::wait_for_input(int milliseconds) {
+    return SSL_has_pending(ssl.get()) || socket_readable(sock->native(), milliseconds);
+}
 void SecureChannel::wait_for_ssl(int result, std::chrono::steady_clock::time_point deadline) {
     int error = SSL_get_error(ssl.get(), result);
     if (error == SSL_ERROR_WANT_READ || error == SSL_ERROR_WANT_WRITE) {

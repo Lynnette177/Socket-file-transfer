@@ -4,7 +4,12 @@
 
 ## 项目背景与版本历史
 
-本仓库始于 2024 年的本科计算机网络课程实验，当时实现了 Windows 上的 Socket TCP 文件传输、命令交互和多客户端处理。本次软件与系统安全课程在这一基础上扩展了跨平台支持、双向身份认证、加密会话、可靠消息分帧和文件访问边界，并整理了源码、可执行文件和实验报告。
+本仓库始于 2024 年的本科计算机网络课程实验，当时实现了 Windows 上的 Socket TCP 文件传输、命令交互和多客户端处理。
+本次软件与系统安全课程在这一基础上扩展了跨平台支持、双向身份认证、加密会话、可靠消息分帧和文件访问边界，并整理了源码、可执行文件和实验报告。
+
+即：
+北京邮电大学2024年计算机网络期末实验 - 实现了Windows上的Socket TCP文件传输、命令交互功能
+中国科学院大学2026年软件与系统安全实验1B - 跨平台、双向身份认证、加密会话、GUI图形界面的安全文件传输功能。
 
 - [本科版本 1.0.0](https://github.com/Lynnette177/Socket-file-transfer/tree/1.0.0)：查看当时的源码和项目说明。
 - [完整提交历史](https://github.com/Lynnette177/Socket-file-transfer/commits/main/)：保留最初提交至今的项目记录。
@@ -42,6 +47,10 @@ Socket-file-transfer/
 - [SFT/1 协议说明（Markdown）](协议详细文档.md) · [协议说明（PDF）](协议详细文档.pdf)
 - [可执行文件及平台说明](binaries/README.md)
 - [测试记录](evidence/)
+
+## 自动构建与发布
+
+GitHub Actions 在推送、Pull Request 和手动触发时分别编译并测试 Linux x86_64、macOS arm64 和 Windows x86_64，并提供各平台的构建包；Windows 包含命令行和图形客户端。推送 `v` 开头的版本标签（例如 `v1.1.0`）后，三平台测试及 Linux 消毒器检查全部通过时，工作流会自动发布 GitHub Release，附带各平台压缩包和 SHA-256 摘要。测试失败时不会发布。
 
 ## 认证与传输
 
@@ -113,8 +122,8 @@ SFT="$PWD/binaries/macos-arm64/sft"
 | 平台 | 当前交付情况 |
 |---|---|
 | macOS arm64 | 原生 Release、集成测试和 ASan/UBSan 检查通过；270 MiB 同会话往返摘要一致 |
-| Linux x86_64 | 已生成完全静态链接可执行文件；原生运行与跨系统互通待验证 |
-| Windows x86_64 | 已生成可执行文件，依赖系统 DLL；原生运行与跨系统互通待验证 |
+| Linux x86_64 | 原生 Release、集成测试和 ASan/UBSan 检查通过；270 MiB 同会话往返摘要一致 |
+| Windows x86_64 | 原生 Release、集成测试和 ASan/UBSan 检查通过；270 MiB 同会话往返摘要一致 |
 
 `evidence/` 保存实验阶段测试记录，其中路径和日期对应当时的本地测试环境。GitHub Actions 会在仓库推送后运行三平台原生构建与集成测试；已有二进制的交叉构建记录不等同于这些运行测试已经通过。
 
